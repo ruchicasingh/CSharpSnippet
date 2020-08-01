@@ -1,0 +1,40 @@
+using System;
+
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+       int result = 0;
+       if(A == null || A.Length ==0)
+       {
+           return result;
+       }
+       else
+       {
+           int len = A.Length;
+           Dictionary<int,int>  dict = new Dictionary<int,int>();
+           foreach (int i in A)
+           {
+               if(dict.ContainsKey(i))
+               {
+                  dict.Remove(i);
+               }
+               else
+               {
+                   dict.Add(i,1);
+               }
+               
+           }
+           result = dict.FirstOrDefault(d=>d.Value==1).Key;
+           return result;
+       }
+       
+    }
+}
