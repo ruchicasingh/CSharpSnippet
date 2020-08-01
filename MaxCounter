@@ -1,0 +1,37 @@
+using System;
+// you can also use other imports, for example:
+using System.Collections.Generic;
+using System.Linq;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int[] solution(int N, int[] A) {
+        int[] counter= new int[N];
+        counter = counter.Select(c=>0).ToArray();
+        int maxCounter = 0;
+        if (A != null && A.Length >0 && N>0)
+        {
+            for (int i = 0; i<A.Length ; i++)
+            {
+                int value = A[i];
+                int value2 = A[i] - 1;
+                if (value >=1 && value<=N)
+                {
+                    counter[value2] = counter[value2]+1;
+                    if(maxCounter < counter[value2])
+                    {
+                        maxCounter=counter[value2];
+                    }
+                }
+                if (value == (N+1))
+                {
+                     counter = counter.Select(c=>maxCounter).ToArray();
+                }
+                 
+            }
+        }
+        return counter;
+    }
+}
