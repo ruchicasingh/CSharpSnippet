@@ -1,0 +1,32 @@
+using System;
+// you can also use other imports, for example:
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        int result = 0;
+        if (A != null && A.Length>1)
+        {
+            int len = A.Length;
+            Dictionary<int,int> dict = new Dictionary<int,int>();
+            dict = A.Select((s, i) => new {i, s}).ToDictionary(x=> x.i,x => x.s);
+            for(int i=1;i<=len-1;i++)
+            {
+               int sum1 = (int)dict.Where(d=> d.Key<i).Sum(d => d.Value);
+                int sum2 = (int)dict.Where(d=> d.Key>=i).Sum(d => d.Value);
+                int diff = Math.Abs(sum1-sum2);
+              if(i==1 || result>diff)
+              {
+                  result = diff;
+              }
+            }
+            
+        }
+        return result;
+    }
+}
