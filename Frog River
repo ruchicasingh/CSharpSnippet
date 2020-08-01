@@ -1,0 +1,37 @@
+using System;
+// you can also use other imports, for example:
+using System.Collections.Generic;
+using System.Linq;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int X, int[] A) {
+        int result = -1;
+        if(A != null && X >0 && A.Length>0)
+        {
+
+            List<int> b = new List<int>();
+   
+            for (int i =1; i<=X; i++)
+            {
+                int pos = A.ToList().IndexOf(i);
+                if(pos==-1)
+                {
+                    return -1;
+                }
+                else 
+                {
+                    b.Add(pos);
+                }
+            }
+            result = b.Max();
+        }
+        else
+        {
+            return-1;
+        }
+        return result;
+    }
+}
