@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        int result = 1;
+        if(A!=null && A.Length>0)
+        {
+            List <int> list = new List<int>();
+            list = A.ToList();
+            if(list.GroupBy(x => x).Any(g => g.Count()>1))
+            {
+                return 0;
+            }
+           
+            result = (int)Enumerable.Range(1,A.Length+1).Except(list).FirstOrDefault();
+        }
+       return result;
+    }
+}
