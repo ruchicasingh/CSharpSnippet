@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode BuildTree(int[] preorder, int[] inorder) {
+        TreeNode tn = new TreeNode();
+        int length = preorder.Length;
+        if (length<1)
+        {
+            return null;
+        }
+        else
+        {
+            //get the left and right preorder and in order 
+             List<int> lpreorder = new List<int>();
+             List<int> rpreorder = new List<int>();
+            
+            List<int> linorder = new List<int>();
+             List<int> rinorder = new List<int>();
+            
+            bool nodefound = false;
+            for(int i=0;i<length;i++)
+            {
+                if (inorder[i]==preorder[0])
+                {
+                    nodefound= true;
+                }
+                else if (!nodefound)
+                {
+                    lpreorder.Add(preorder[i+1]);
+                    linorder.Add(inorder[i]);
+                }
+                else
+                {
+                    rpreorder.Add(preorder[i]);
+                    rinorder.Add(inorder[i]);
+                }                                 
+            }
+            tn.val=preorder[0];
+            tn.left=BuildTree(lpreorder.ToArray(),linorder.ToArray());
+            tn.right=BuildTree(rpreorder.ToArray(),rinorder.ToArray());
+        }
+        return tn;
+    }
+}
