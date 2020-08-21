@@ -1,0 +1,20 @@
+public class Solution {
+    public string RestoreString(string s, int[] indices) {
+        String result = String.Empty;
+        Dictionary <int,char> dict = new Dictionary <int,char>();
+        int i=0;
+        // loop through each charecter
+        foreach(char c in s) 
+        {
+            //add value to dictionary
+            dict.Add(indices[i],c);
+            i++;    
+        }
+        for(int j=0;j<i;j++)
+        {
+            Console.Write(dict.FirstOrDefault(d=>d.Key==j).Value);
+            result =  result+dict.FirstOrDefault(d=>d.Key==j).Value;
+        }
+        return result;
+    }
+}
