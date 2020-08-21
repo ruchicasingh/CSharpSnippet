@@ -1,0 +1,93 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode BuildTree(int[] inorder, int[] postorder) {        
+        TreeNode tn = new TreeNode();
+        int l = postorder.Length;
+        if(l>1)
+        {
+            // root is the last element of post order 
+            tn.val=postorder[l-1];
+            
+            //preorder left and right of node is preorder
+            List<int> inorder1= new List<int>();
+            List<int> inorder2= new List<int>();
+            //the postorder is created by using the length of inorder
+            List<int> postorder1= new List<int>();
+            List<int> postorder2= new List<int>();
+            bool node= false;
+            int index=0;
+            foreach (int i in inorder)
+            {
+                if (i==tn.val)
+                {                
+                    node=true;
+                }
+                else
+                {
+                    if(node)
+                    {                
+                        inorder2.Add(i);
+                        postorder2.Add(postorder[index]);
+                        index++;
+                     }
+                    else
+                    {
+                        inorder1.Add(i);
+                        postorder1.Add(postorder[index]);
+                        index++;
+                    }
+                }        
+            
+            }  
+            if(inorder1.Count>0)
+            {
+                tn.left = BuildTree(inorder1.ToArray(),postorder1.ToArray());
+            }
+             else
+             {
+                tn.left = null  ;
+             }
+             if(inorder2.Count>0)
+            {
+                tn.right = BuildTree(inorder2.ToArray(),postorder2.ToArray());
+            }
+             else
+             {
+                tn.right = null  ;
+             }
+ 
+        }
+        else if(l==1)
+        {
+            tn.val=postorder[0];
+            tn.left=null;
+            tn.right=null;
+        }
+        else if(l==2)
+        {
+            tn.val=postorder[0];
+            tn.left=null;
+            tn.right=null;
+        }
+        else
+        {
+            return null;
+        }
+        
+        return tn;
+    }
+    
+    
+}
