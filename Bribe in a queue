@@ -1,0 +1,81 @@
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Solution {
+
+    // Complete the minimumBribes function below.
+    static void minimumBribes(int[] q) {
+        if (q==null || q.Length<1)
+        {
+            Console.Write("0 ");
+        }
+        string result ="";
+        int bribe=0;
+        int diff=0;
+        int l= q.Length;
+        Dictionary<int,int> dict = new Dictionary<int,int>();
+        bool c = false;
+        int pos=0;
+        //store the current
+        for (int k=0;k<l;k++)
+        {
+            dict.Add(q[k],k);
+        }
+        
+        // iterate from the last element
+        for(int i=(l-1);i>=0;i--)
+        {
+            int index= dict[i+1];
+            int value = i+1;
+            diff = value-(index+1); // check ho far from actual value
+            if(diff>2)
+            {
+                c= true;
+                break;
+            }        
+            else if(diff>0)
+            {
+                for(int j=index;j<i;j++)
+                {
+                    q[j]=q[j+1];
+                    dict[q[j+1]]=dict[q[j+1]]-1;
+                }
+                q[i]=value;   
+                bribe= bribe+diff;           
+            }
+        }
+        if(c)
+        {
+            result ="Too chaotic"; 
+        }
+        else
+        {
+            result =bribe.ToString();
+        }
+        Console.WriteLine(result);
+
+    }
+
+    static void Main(string[] args) {
+        int t = Convert.ToInt32(Console.ReadLine());
+
+        for (int tItr = 0; tItr < t; tItr++) {
+            int n = Convert.ToInt32(Console.ReadLine());
+
+            int[] q = Array.ConvertAll
+            (Console.ReadLine().Split(' '), qTemp => Convert.ToInt32(qTemp));
+            minimumBribes(q);
+        }
+    }
+}
