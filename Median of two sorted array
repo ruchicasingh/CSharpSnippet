@@ -1,0 +1,64 @@
+public class Solution {
+    public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
+        double result = 0;
+        int i1=0;
+        int i2=0;
+         if(nums1== null || nums2== null)
+         {
+             return 0;
+         }
+        int l1= nums1.Length;
+        int l2 = nums2.Length;
+        int length = l1+l2;
+        double median =0;
+        //check if number is odd
+        bool isodd=false;
+       
+        if(length<1)
+        {
+            return 0;
+        }
+        if(length%2 == 1)
+        {
+            isodd=true;
+        }
+        Console.Write(length);
+        for(int i=0;i<(length/2);i++)
+        {
+            if(i2>=l2 || (i1<l1 && nums1[i1]<nums2[i2]))
+            {   
+                median = nums1[i1];
+                i1++;
+            }
+            else 
+            {    
+                median = nums2[i2];
+                i2++;
+            }
+        }
+        if(isodd)
+        {
+             if(i2>=l2 ||(i1<l1 && nums1[i1]<nums2[i2]) )
+            {   
+                result = nums1[i1];
+            }
+            else 
+            {    
+               result = nums2[i2];
+            }
+        }
+        else
+        {
+            if(i2>=l2 ||(i1<l1 && nums1[i1]<nums2[i2]))
+            {   
+                result = (double) (median + nums1[i1])/2;
+            }
+            else 
+            {    
+               result = (double) (median + nums2[i2])/2;
+            }
+        }
+        return result;
+        
+    }
+}
