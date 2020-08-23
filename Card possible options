@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+class Solution {
+
+    // Complete the solve function below.
+    static int solve(int[] c) {
+        int result=0 ;
+        if(c==null ||c.Length==0)
+        {
+            return 0;
+        }
+        int len = c.Length;
+        long chance=1;
+        long remaining=0;
+        Dictionary<long,long> dict = new Dictionary<long,long>();
+        for(int i=0;i<len;i++)
+        {
+            if(dict.ContainsKey(c[i]))
+            {                
+                dict[c[i]]= dict[c[i]]+1;
+            }
+            else
+            {
+                dict.Add(c[i],1);
+            }
+        }
+
+        for(int i=0;i<len;i++)
+        {
+            if(dict.ContainsKey(i))
+            {
+                remaining = remaining+dict[i];     
+            }
+            if(remaining>0)
+            {
+                chance= (chance * remaining) % 1000000007;
+                remaining--;
+            }
+            else
+            {
+                chance = 0;
+                return 0;
+            }
+        }
+        Console.Write("total " + chance+" // ");
+        return (int)chance;
+    }
+
+    static void Main(string[] args) {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        int t = Convert.ToInt32(Console.ReadLine());
+
+        for (int tItr = 0; tItr < t; tItr++) {
+            int cCount = Convert.ToInt32(Console.ReadLine());
+
+            int[] c = Array.ConvertAll(Console.ReadLine().Split(' '), cTemp => Convert.ToInt32(cTemp))
+            ;
+            int result = solve(c);
+
+            textWriter.WriteLine(result);
+        }
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
