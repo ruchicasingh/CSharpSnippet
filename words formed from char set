@@ -1,0 +1,49 @@
+public class Solution {
+    public int CountCharacters(string[] words, string chars) {
+        int result =0;
+        if(words==null || words.Length <1 || words.Length >1000   || chars==null || chars.Length<1 || chars.Length>100)
+        {
+            return 0;
+        }
+        Dictionary <char,int> dict = new Dictionary<char,int>();
+        int w=0 ; //  to count the letters from char string in a word
+
+        foreach (string word in words)
+        {
+           
+            w=0;
+            if(word.Length>0)
+            {
+                 dict.Clear();
+                foreach (char c in chars)
+                {
+                    if(dict.ContainsKey(c))
+                    {
+                        dict[c]=dict[c]+1;
+                    }
+                    else
+                    {
+                        dict.Add(c,1);
+                    }
+                }
+                foreach(char c in word)
+                {
+                    if(dict.ContainsKey(c) && dict[c]>0)
+                    {
+                        w++;
+                        dict[c]=dict[c]-1;
+                    }
+                    else
+                    {
+                        w=0;
+                        break;
+                    }
+                }
+            }
+            
+            result = result+w;
+        }
+        return result;
+        
+    }
+}
