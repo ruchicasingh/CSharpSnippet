@@ -1,0 +1,46 @@
+public class Solution {
+    public string ReverseVowels(string s) {
+        string result = string.Empty;
+        if(string.IsNullOrEmpty(s))
+        {
+            return result;
+        }
+        int ind= 0;
+        Queue <int> q= new Queue<int>();
+        Stack <char> stc= new Stack<char>();
+        string vowels = string.Empty;
+        //dictionary with all vowels
+        Dictionary <char,int> dict = new Dictionary <char,int> ();
+        dict.Add('a',0);
+        dict.Add('e',0);
+        dict.Add('i',0);
+        dict.Add('o',0);
+        dict.Add('u',0);
+        
+        dict.Add('A',0);
+        dict.Add('E',0);
+        dict.Add('I',0);
+        dict.Add('O',0);
+        dict.Add('U',0);
+        char[] chars= s.ToCharArray();        
+        foreach(char c in chars)
+        {
+            if(dict.ContainsKey(c))
+            {
+                q.Enqueue(ind);
+                stc.Push(c);
+            }
+            ind++;
+        }
+        
+        int vi= vowels.Length -1 ; //index of vowel
+        foreach(int i  in q)
+        {
+            char c = stc.Pop();
+            chars[i]=c;
+        }
+        
+        return string.Join("",chars);
+        
+    }
+}
