@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public IList<int> LargestValues(TreeNode root) {
+        List<int> result = new List<int>();
+        if(root== null || root.val==null)
+        {
+            return result;
+        }
+        Queue <TreeNode> q = new Queue<TreeNode>();
+        q.Enqueue(root); // add root to queue
+        int max = int.MinValue;
+        while(q != null && q.Count!= 0)// loop for each node in queue
+        {           
+            max = int.MinValue;  
+            int count = q.Count;
+            for (int i=1;i<=count;i++) // loop through one level
+            {
+                TreeNode n = q.Dequeue(); // Dequeue one node at a time for the level
+                Console.Write(n.val);
+                if(n.val > max)
+                {
+                    max= n.val;
+                    
+                }
+                if (n.left!=null) // queue next level
+                {
+                    q.Enqueue(n.left);
+                }
+                if (n.right!=null)// queue next level
+                {
+                    q.Enqueue(n.right);
+                }                
+            }     
+            Console.Write(max+"   ");
+            result.Add(max);
+        }
+              
+        return result;
+        
+    }
+}
