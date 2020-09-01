@@ -1,0 +1,245 @@
+public class Solution {
+    public string LargestTimeFromDigits(int[] A) {
+        if(A== null || A.Length==0)
+        {
+            return "";
+        }
+        string time = String.Empty;  
+        int cH1=0;
+        int c=0;
+        int cH2=0;
+        int cM1=0;
+        Dictionary<int,int> dict = new Dictionary<int,int>();
+        Dictionary<int,int> dictH1 = new Dictionary<int,int>();
+        Dictionary<int,int> dictM1 = new Dictionary<int,int>();
+        Dictionary<int,int> dictH2 = new Dictionary<int,int>();
+        for (int i=0; i<A.Length;i++)
+        {
+            if(A[i]<0 ||A[i]>9)
+            {
+                return "";
+            }
+            if(dict.ContainsKey(A[i]))
+            {
+                dict[A[i]] = dict[A[i]] + 1;
+            }
+            else
+            {
+                dict.Add(A[i],1);
+            }
+            // add values in dictionary for H1
+            if(A[i]<=2)
+            {
+                cH1++;
+                if(A[i]<2)
+                {
+                    c++;
+                }
+                if(dictH1.ContainsKey(A[i]))
+                {
+                    dictH1[A[i]]= dictH1[A[i]]+1;
+                }
+                else
+                {
+                    dictH1.Add(A[i],1);
+                }
+            }
+            // add values in dictionary for H2
+            if(A[i]<4)
+            {
+                cH2++;
+                if(dictH2.ContainsKey(A[i]))
+                {
+                    dictH2[A[i]]= dictH2[A[i]]+1;
+                }
+                else
+                {
+                    dictH2.Add(A[i],1);
+                }
+            }
+            // add values in dictionary for M1
+            if(A[i]<=5)
+            {
+                cM1++;
+                if(dictM1.ContainsKey(A[i]))
+                {
+                    dictM1[A[i]]= dictM1[A[i]]+1;
+                }
+                else
+                {
+                    dictM1.Add(A[i],1);
+                }
+            }
+        }
+  
+        if(cM1<2 ||cH1<1)
+        {
+            return"";
+        }
+        else
+        {
+            //check if hours place start with 2 and has 0-3 in the second hour place and 0-5 in Minutes
+            if(dictH1.ContainsKey(2) && cH2>1 && cM1>2)
+            {
+                time = "2";
+                //remove 2 from the H2 and M1 dictionary since it is assigned
+                if(dictH2.ContainsKey(2))
+                {
+                    if(dictH2[2]==1)
+                    {
+                        dictH2.Remove(2);
+                    }
+                    else
+                    {
+                        dictH2[2]=dictH2[2]-1;
+                    }
+
+                }
+                if(dictM1.ContainsKey(2))
+                {
+                    if(dictM1[2]==1)
+                    {
+                        dictM1.Remove(2);
+                    }
+                    else
+                    {
+                        dictM1[2]=dictM1[2]-1;
+                    }
+                }
+                if(dict.ContainsKey(2))
+                {
+                    if(dict[2]==1)
+                    {
+                        dict.Remove(2);
+                    }
+                    else
+                    {
+                        dict[2]=dict[2]-1;
+                    }
+                }
+                for(int i = 3 ; i>=0;i--)
+                {
+                    if(dictM1.ContainsKey(i))
+                    {
+                        time = time + i.ToString();
+                        if(dictM1.ContainsKey(i))
+                        {
+                            if(dictM1[i]==1)
+                            {
+                                dictM1.Remove(i);
+                            }
+                            else
+                            {
+                                dictM1[i]=dictM1[i]-1;
+                            }
+                        }
+                        if(dict.ContainsKey(i))
+                        {
+                            if(dict[i]==1)
+                            {
+                                dict.Remove(i);
+                            }
+                            else
+                            {
+                                dict[i]=dict[i]-1;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            else if(c>=1 && cM1>=2)
+            {
+                for(int i = 1 ; i>=0;i--)
+                {                    
+                    if(dictH1.ContainsKey(i))
+                    {
+                        time = i.ToString();
+                        if(dictM1.ContainsKey(i))
+                        {
+                            if(dictM1[i]==1)
+                            {
+                                dictM1.Remove(i);
+                            }
+                            else
+                            {
+                                dictM1[i]=dictM1[i]-1;
+                            }
+                        }
+                        if(dict.ContainsKey(i))
+                        {
+                            if(dict[i]==1)
+                            {
+                                dict.Remove(i);
+                            }
+                            else
+                            {
+                                dict[i]=dict[i]-1;
+                            }
+                        }
+                        //set the value of H2
+                        for(int j = 9 ; j>=0;j--)
+                        {
+                            if(dict.ContainsKey(j))
+                            {
+                                time = time + j.ToString();
+                                if(dictM1.ContainsKey(j))
+                                {
+                                    if(dictM1[j]==1)
+                                    {
+                                        dictM1.Remove(j);
+                                    }
+                                    else
+                                    {
+                                        dictM1[j]=dictM1[j]-1;
+                                    }
+                                }
+                                if(dict[j]==1)
+                                {
+                                    dict.Remove(j);
+                                }
+                                else
+                                {
+                                    dict[j]=dict[j]-1;
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                   
+                }
+                
+            }
+            else
+            {
+                return "";
+            }
+            time = time +":";
+            //setting the value of M1
+            for(int j = 5 ; j>=0;j--)
+            {
+                if(dictM1.ContainsKey(j))
+                {
+                    time = time + j.ToString();
+                    if(dict[j]==1)
+                    {
+                        dict.Remove(j);
+                    }
+                    else
+                    {
+                        dict[j]=dict[j]-1;
+                    }
+                    break;
+                }
+            }
+            
+             //setting the value of M2
+            foreach(KeyValuePair<int,int> kv in dict)
+            {
+                time = time + kv.Key.ToString();
+            }
+        }
+        return time;
+    }
+}
