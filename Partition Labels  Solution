@@ -1,0 +1,48 @@
+public class Solution {
+    public IList<int> PartitionLabels(string S) {
+        List<int> part = new List<int>();
+        //return null for null input
+        if(S==null)
+        {
+            return null;
+        }
+        int l= S.Length;
+        // return empty list if too long or short
+        if(l<1 || l>500)
+        {
+            return part;
+        }
+        // use a dictionary to store last index of each charecter
+        Dictionary<char,int> lastInd = new Dictionary<char,int>();
+        for (int i=0;i<l;i++)
+        {
+            if(lastInd.ContainsKey(S[i]))
+            {
+                lastInd[S[i]]=i;
+            }
+            else
+            {
+                lastInd.Add(S[i],i);
+            }
+        }
+        int index = 0;
+        while(index<l)
+        {
+            // get the next last index
+            int next = lastInd[S[index]];
+            //if the last index of any charecter in string before the last next index, update next index
+            for(int i=index;i<next;i++)
+            {
+                if(lastInd[S[i]]>next)
+                {
+                    next = lastInd[S[i]];
+                }
+            }
+            // the list stores the length of each string (new index - old index)
+            part.Add((next-index)+1);
+            // the next index is one more than last index checked
+            index = next+1; 
+        }
+        return part;
+    }
+}
