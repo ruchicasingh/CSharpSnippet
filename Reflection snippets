@@ -1,0 +1,17 @@
+//to get a string method
+if (!string.IsNullOrEmpty(field.OperationBeforeSending) && !string.IsNullOrEmpty(val))
+                    {
+                        Type thisType = val.GetType();
+                        var method = thisType.GetMethod(field.OperationBeforeSending, new Type[0]);
+                        var convertedVal = method.Invoke(val,null);
+                    }
+                    
+//To get a property
+Type objType = people.GetType();
+                        var prop = objType.GetProperties().FirstOrDefault(p => p.Name.ToLower() == field.AmandaTableFieldName.ToLower());
+                        if (prop != null && prop.GetValue(people) != null)
+                        {
+                            applicationcomp.Value = prop.GetValue(people).ToString();
+                        }
+                        
+
