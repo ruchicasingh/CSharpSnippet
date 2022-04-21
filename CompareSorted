@@ -1,0 +1,40 @@
+public class Solution {
+    public int HeightChecker(int[] heights) {
+        
+        //Dictionary for elements and sorted
+        Dictionary<int,int> h =heights.Select((s,i)=>new {i,s}).ToDictionary(x=>x.i,x=>x.s);//sorted
+        Dictionary<int,int> e = heights.Select((s,i)=>new {i,s}).ToDictionary(x=>x.i,x=>x.s);//elements
+        int l = heights.Length;
+        int result = 0;
+        
+        //loop through each element for sorting
+        for (int i = 0; i<l; i++)
+        {
+            int element = h.ElementAt(i).Value;
+            for (int j = i+1; j<l; j++)
+            {
+                int e1 = h.ElementAt(j).Value;                
+                if(h.ElementAt(i).Value >e1)
+                {                   
+                    h[j]=h.ElementAt(i).Value;
+                    h[i]=e1;
+                }
+            }
+           
+              
+        }
+        //compare element and sorted
+        for (int i = 0; i<l; i++)
+        {
+
+            if(h.ElementAt(i).Value != e.ElementAt(i).Value)
+            {
+                result ++;
+
+            }
+        }
+         
+        return result;
+        
+    }
+}
