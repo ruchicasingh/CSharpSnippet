@@ -1,0 +1,34 @@
+//A binary gap within a positive integer N is any maximal sequence of consecutive zeros that is surrounded by ones at both ends in the binary representation of N.
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int N) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        string binary = Convert.ToString(N,2);
+        Console.WriteLine(binary);
+        int gap = 0;
+        int hGap =0;
+        foreach(var c in binary)
+        {
+            if(c=='1')
+            {
+                if(gap >hGap)
+                {
+                    hGap=gap;
+
+                }
+                gap = 0;
+            }
+            else 
+            {
+                gap++;
+            }
+        }
+        return hGap;
+    }
+}
